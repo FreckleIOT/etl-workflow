@@ -17,7 +17,7 @@ pipeline {
         }
       }
 
-      stage('Typecheck') {  
+      stage('Test') {  
         agent {
               node {
                   label 'general'
