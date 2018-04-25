@@ -1,21 +1,35 @@
 pipeline {
-  agent none
-  stages {
-    stage('Typecheck') {
-      steps {
-        node(label: 'general') {
-          sh 'sbt compile'
+    agent none
+    
+    stages {
+      stage('Typecheck') {
+        agent {
+          node {
+            label 'general'
+          }
         }
+        steps {
+          ansiColor('xterm') {
+            sh '''
+            sbt compile
+            '''
+          }
+        }
+      }
 
+      stage('Typecheck') {  
+        agent {
+              node {
+                  label 'general'
+              }
+        }
+        steps {
+          ansiColor('xterm') {
+            sh '''
+            sbt test
+            '''
+          }
+        }
       }
     }
-    stage('Run tests') {
-      steps {
-        node(label: 'general') {
-          sh 'sbt test'
-        }
-
-      }
-    }
-  }
 }
